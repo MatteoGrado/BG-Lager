@@ -1,0 +1,70 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: BG-Lager-App
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: jdbc:mysql://db:3306/BG_DB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Europe/Berlin
+      DATABASE_USERNAME: BG_Admin
+      DATABASE_PASSWORD: "Sumafelo!"
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+      MAIL_SENDER_ADDRESS: mail@test.de
+      MAIL_RECIPIENT: matteo.grado.23@gmail.com
+    depends_on:
+      db:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    container_name: BG-LagerSystem
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Sumafelo
+      MYSQL_USER: BG_Admin
+      MYSQL_DATABASE: BG_DB
+      MYSQL_PASSWORD: "Sumafelo!"
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-pSumafelo"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - app-network
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    platform: linux/amd64
+    container_name: BG-MailHog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db_data:

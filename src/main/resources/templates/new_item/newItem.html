@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Neues Produkt</title>
+    <link rel="stylesheet" href="/styles/new-item/style.css">
+</head>
+<body>
+<div class="form-container">
+    <h1 class="header">Neues Produkt:</h1>
+    <form method="post" action="/dashboard/newItem">
+        <div class="form-group">
+            <label for="productName">Produktname:</label>
+            <input id="productName" name="productName" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="shelfNumber">Regalnummer:</label>
+            <input id="shelfNumber" name="shelfNumber" type="number" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="stock">Menge:</label>
+            <input id="stock" name="stock" type="number" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Preis:</label>
+            <input id="price" name="price" type="number" step="0.01" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="deliveryTime">Lieferdatum:</label>
+            <input id="deliveryTime" name="deliveryTime" type="datetime-local" class="form-control"
+                   th:value="${#temporals.format(deliveryTime, 'yyyy-MM-dd') + 'T' + #temporals.format(deliveryTime, 'HH:mm')}">
+        </div>
+        <div class="form-group">
+            <label for="seller">Verkäufer:</label>
+            <input id="seller" name="seller" class="form-control" required>
+        </div>
+        <div class="form-group checkbox-container">
+            <label for="barcode">Barcode erstellen:
+                <input id="barcode" name="barcode" type="checkbox" value="1" class="form-checkbox">
+            </label>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="form-submit-button">Erstellen</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

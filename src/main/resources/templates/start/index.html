@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/styles/start-login/style.css}">
+</head>
+<body>
+<div class="form-container">
+    <h1 class="header">Login</h1>
+    <img th:src="@{/images/LogoBG.png}" class="img-logo" alt="Logo BG-Pfullingen">
+    <div th:if="${error}" style="color:#c00;font-weight:bold;margin-bottom:15px;text-align:center" th:text="${error}"></div>
+    <form method="post" th:action="@{/}">
+        <label for="username">Benutzername:</label>
+        <input id="username" name="username" type="text" class="form-control" required th:value="${username}">
+        <label for="password">Passwort:</label>
+        <input id="password" name="password" type="password" class="form-control" required>
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+</html>

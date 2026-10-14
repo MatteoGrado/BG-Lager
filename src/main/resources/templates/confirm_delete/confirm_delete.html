@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Löschen bestätigen</title>
+    <link rel="stylesheet" href="/styles/confirm-delete/style.css">
+</head>
+<body>
+<div class="delete-form-container">
+    <form method="post" class="delete-form" th:action="@{'/dashboard/confirmDelete/' + ${id}}">
+        <h2>Löschen bestätigen</h2>
+        <label for="password">Passwort</label>
+        <input id="password" name="password" type="password" placeholder="Passwort eingeben" required>
+        <button type="submit" class="btn-submit">Löschen bestätigen</button>
+    </form>
+</div>
+</body>
+</html>

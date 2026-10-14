@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: BG-LagerSystem
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3307/BG_DB?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Europe/Berlin}
+    username: ${DATABASE_USERNAME:BG_Admin}
+    password: ${DATABASE_PASSWORD:Sumafelo!}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  thymeleaf:
+    cache: false
+
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+server:
+  port: ${SERVER_PORT:8000}
+
+mail:
+  sender-address: ${MAIL_SENDER_ADDRESS:mail@test.de}
+  recipient: ${MAIL_RECIPIENT:matteo.grado.23@gmail.com}
+
+logging:
+  level:
+    de.bg.lagersystem: INFO

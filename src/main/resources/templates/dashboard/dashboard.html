@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lager-Manager</title>
+    <link rel="stylesheet" href="/styles/dashboard/style.css">
+</head>
+<body>
+<div class="header">
+    <h1>Lager-Manager</h1>
+    <form method="get" action="/dashboard" class="search-form">
+        <input name="search" class="dashboard-search-bar" type="text" placeholder="Suche" th:value="${search}">
+    </form>
+    <form method="post" action="/logout" class="logout-form">
+        <button type="submit" class="dashboard-btn-logout">Ausloggen</button>
+    </form>
+</div>
+<div class="content">
+    <a href="/dashboard/newItem" class="dashboard-btn-new">Hinzufügen</a>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Produkt Name</th>
+            <th>Regal Nr.</th>
+            <th>Lagerbestand</th>
+            <th>Kosten €</th>
+            <th>Lieferdatum</th>
+            <th>Lieferant</th>
+            <th>Aktionen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.shelfNumber}"></td>
+            <td>
+                <form method="post" th:action="@{'/dashboard/actionHandler/' + ${product.id}}">
+                    <div class="stock-control">
+                        <button class="dashboard-btn-minus" type="submit" name="action" value="minus">-</button>
+                        <span class="stock-value" th:text="${product.stock}"></span>
+                        <button class="dashboard-btn-plus" type="submit" name="action" value="plus">+</button>
+                    </div>
+                </form>
+            </td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${#temporals.format(product.deliveryTime, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${product.seller}"></td>
+            <td>
+                <form method="post" th:action="@{'/dashboard/actionHandler/' + ${product.id}}">
+                    <button class="dashboard-btn-edit" type="submit" name="action" value="edit">⚒️ Bearbeiten</button>
+                    <button class="dashboard-btn-delete" type="submit" name="action" value="delete">🗑 Löschen</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

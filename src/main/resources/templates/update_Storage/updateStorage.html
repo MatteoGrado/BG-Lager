@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Lager Aktualisieren</title>
+    <link rel="stylesheet" href="/styles/update-Storage/style.css">
+</head>
+<body>
+<div class="storage-container">
+    <h1>Lager Aktualisieren</h1>
+    <form method="post" class="storage-form" th:action="@{'/update-storage/' + ${storage.id}}">
+        <div class="form-group readonly">
+            <label>ID</label>
+            <input type="text" th:value="${storage.id}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="productName">Produktname</label>
+            <input id="productName" type="text" th:value="${storage.productName}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="shelfNumber">Regalnummer</label>
+            <input id="shelfNumber" type="number" th:value="${storage.shelfNumber}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="stock">Bestand</label>
+            <input id="stock" name="stock" type="number" min="0" required th:value="${storage.stock}">
+        </div>
+        <div class="form-group">
+            <label for="price">Preis</label>
+            <input id="price" type="text" th:value="${storage.price}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="deliveryTime">Lieferzeit</label>
+            <input id="deliveryTime" name="deliveryTime" type="datetime-local" required
+                   th:value="${#temporals.format(storage.deliveryTime, 'yyyy-MM-dd') + 'T' + #temporals.format(storage.deliveryTime, 'HH:mm')}">
+        </div>
+        <div class="form-group">
+            <label for="seller">Verkäufer</label>
+            <input id="seller" type="text" th:value="${storage.seller}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="firstName">Vorname</label>
+            <input id="firstName" name="firstName" type="text">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Nachname</label>
+            <input id="lastName" name="lastName" type="text">
+        </div>
+        <div class="form-group">
+            <label for="useFor">Wird verwendet für:</label>
+            <input id="useFor" name="useFor" type="text">
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Aktualisieren</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

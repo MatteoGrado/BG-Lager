@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.storage-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.storage-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.storage-form .form-group {
+    margin-bottom: 20px;
+}
+
+.storage-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+.storage-form input,
+.storage-form select,
+.storage-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccd1d5;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.storage-form input:focus,
+.storage-form select:focus,
+.storage-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Readonly Styling */
+.storage-form .readonly input,
+.storage-form input[readonly] {
+    background-color: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Errors */
+.storage-form .form-error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* Submit Button */
+.form-actions {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.btn-submit,
+button[type="submit"] {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover,
+button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Symfony Form Submit Button */
+#update_storage_form_submit {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#update_storage_form_submit:hover {
+    background-color: #218838;
+}

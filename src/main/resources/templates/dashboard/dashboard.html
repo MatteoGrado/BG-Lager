@@ -10,7 +10,7 @@
 <div class="header">
     <h1>Lager-Manager</h1>
     <form method="get" action="/dashboard" class="search-form">
-        <input name="search" class="dashboard-search-bar" type="text" placeholder="Suche" th:value="${search}">
+        <input name="search" class="dashboard-search-bar" type="text" placeholder="Suche nach Produkt Name" th:value="${search}">
     </form>
     <form method="post" action="/logout" class="logout-form">
         <button type="submit" class="dashboard-btn-logout">Ausloggen</button>
@@ -25,7 +25,7 @@
             <th>Produkt Name</th>
             <th>Regal Nr.</th>
             <th>Lagerbestand</th>
-            <th>Kosten €</th>
+            <th>EK/Stk.</th>
             <th>Lieferdatum</th>
             <th>Lieferant</th>
             <th>Aktionen</th>

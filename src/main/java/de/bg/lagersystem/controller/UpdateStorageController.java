@@ -1,7 +1,6 @@
 package de.bg.lagersystem.controller;
 
 import de.bg.lagersystem.model.Storage;
-import de.bg.lagersystem.service.MailService;
 import de.bg.lagersystem.service.StorageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +11,9 @@ import java.time.LocalDateTime;
 @Controller
 public class UpdateStorageController {
     private final StorageService storageService;
-    private final MailService mailService;
 
-    public UpdateStorageController(StorageService storageService, MailService mailService) {
+    public UpdateStorageController(StorageService storageService) {
         this.storageService = storageService;
-        this.mailService = mailService;
     }
 
     @GetMapping("/update-storage/{id}")
@@ -44,17 +41,9 @@ public class UpdateStorageController {
                        @RequestParam(required = false, defaultValue = "") String firstName,
                        @RequestParam(required = false, defaultValue = "") String lastName,
                        @RequestParam(required = false, defaultValue = "") String useFor) {
-        Storage item = storageService.updateStock(id, stock, LocalDateTime.parse(deliveryTime));
+        storageService.updateStock(id, stock, LocalDateTime.parse(deliveryTime),
+                firstName, lastName, useFor);
 
-        // In the original controller, $action comes from the query string and
-        // is null on a normal POST, so the equivalent action is empty here.
-        try {
-            mailService.sendHtmlMail(item.getProductName(), item.getStock(), useFor,
-                    firstName, lastName, "");
-        } catch (Throwable e) {
-            // Original code dumped the exception. We keep the update successful
-            // and let the application log/report the mail problem.
-        }
         return "redirect:/dashboard";
     }
 

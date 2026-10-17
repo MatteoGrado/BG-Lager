@@ -1,12 +1,14 @@
 package de.bg.lagersystem.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "storage")
+@Data
 public class Storage
 {
     @Id
@@ -36,24 +38,5 @@ public class Storage
 
     @Transient
     private String useFor;
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getProductName() { return productName; }
-    public void setProductName(String productName) { this.productName = productName; }
-    public Integer getShelfNumber() { return shelfNumber; }
-    public void setShelfNumber(Integer shelfNumber) { this.shelfNumber = shelfNumber; }
-    public Integer getStock() { return stock; }
-    public void setStock(Integer stock) { this.stock = stock; }
-    public BigDecimal getPrice() { return price; }
-    public void setPrice(BigDecimal price) { this.price = price; }
-    public LocalDateTime getDeliveryTime() { return deliveryTime; }
-    public void setDeliveryTime(LocalDateTime deliveryTime) { this.deliveryTime = deliveryTime; }
-    public String getSeller() { return seller; }
-    public void setSeller(String seller) { this.seller = seller; }
-    public Integer getMinStock() { return minStock; }
-    public void setMinStock(Integer minStock) { this.minStock = minStock; }
-    public String getUseFor() { return useFor; }
-    public void setUseFor(String useFor) { this.useFor = useFor; }
 
 }

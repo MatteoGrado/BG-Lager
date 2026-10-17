@@ -66,24 +66,13 @@ public class MailService {
 
     public void sendMail(String productName, int itemStock)
     {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(recipient);
+        message.setSubject("Lagerbestand kritisch");
+        message.setText("Für das Produkt " + productName
+                + " sind nur noch " + itemStock + " Einheiten verfügbar!");
 
-            message.setFrom(from);
-            message.setTo(recipient);
-            message.setSubject("Lager Bestand kritisch!");
-
-            message.setText(
-                    "Für das Produkt "
-                    + productName +
-                    " sind nur noch "
-                    + itemStock +
-                    " einheiten verfügbar!"
-            );
-
-            mailSender.send(message);
-        } catch (RuntimeException exception) {
-            throw new IllegalStateException(exception);
-        }
+        mailSender.send(message);
     }
 }

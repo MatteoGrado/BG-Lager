@@ -33,8 +33,10 @@ public class Storage
     @Column(nullable = false)
     private String seller;
 
-    @Transient
     private Integer minStock;
+
+    @Column(name = "stock_alert_sent", nullable = false)
+    private boolean stockAlertSent;
 
     @Transient
     private String useFor;

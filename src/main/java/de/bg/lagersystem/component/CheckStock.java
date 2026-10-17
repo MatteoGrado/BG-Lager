@@ -23,11 +23,20 @@ public class CheckStock
         List<Storage> storage = storageRepository.findAll();
 
         for (Storage item : storage) {
+            if (item.getStock() == null || item.getMinStock() == null) {
+                continue;
+            }
+
             int itemStock = item.getStock();
             int itemMinStock = item.getMinStock();
 
-            if (itemStock < itemMinStock) {
+            if (itemStock < itemMinStock && !item.isStockAlertSent()) {
                 mailService.sendMail(item.getProductName(), itemStock);
+                item.setStockAlertSent(true);
+                storageRepository.save(item);
+            } else if (itemStock >= itemMinStock && item.isStockAlertSent()) {
+                item.setStockAlertSent(false);
+                storageRepository.save(item);
             }
         }
     }

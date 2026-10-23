@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
 @Service
@@ -37,19 +38,47 @@ public class MailService {
         mailSender.send(message);
     }
 
-    public void sendHtmlMail(String productName, int stock, String useFor,
-                             String firstName, String lastName, String action) {
+    public void sendHtmlMail(String productName, BigDecimal price, int removedQuantity,
+                             int stock, String manufacturer) {
         try {
             String html = new String(
                     getClass().getResourceAsStream("/email/template.html").readAllBytes(),
                     StandardCharsets.UTF_8
             );
-            html = html.replace("{{FIRST_NAME}}", String.valueOf(firstName))
-                    .replace("{{LAST_NAME}}", String.valueOf(lastName))
-                    .replace("{{ACTION}}", String.valueOf(action))
-                    .replace("{{PRODUCT_NAME}}", String.valueOf(productName))
+            html = html.replace("{{PRODUCT_NAME}}", String.valueOf(productName))
+                    .replace("{{PRICE}}", String.valueOf(price))
+                    .replace("{{ENTNOMMENE_MENGE}}", String.valueOf(removedQuantity))
                     .replace("{{STOCK}}", String.valueOf(stock))
-                    .replace("{{USE_FOR}}", String.valueOf(useFor));
+                    .replace("{{HERSTELLER}}", String.valueOf(manufacturer));
+
+            MimeMessage mime = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mime, false, StandardCharsets.UTF_8.name());
+            helper.setFrom(from);
+            helper.setTo(recipient);
+            helper.setSubject("Lager akutallisierung");
+            helper.setText(html, true);
+            mailSender.send(mime);
+        } catch (IOException | MessagingException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public void sendHtmlMail(String productName, BigDecimal price, int removedQuantity,
+                             int stock, String manufacturer, String firstName,
+                             String lastName, String action) {
+        try {
+            String html = new String(
+                    getClass().getResourceAsStream("/email/template.html").readAllBytes(),
+                    StandardCharsets.UTF_8
+            );
+            html = html.replace("{{PRODUCT_NAME}}", String.valueOf(productName))
+                    .replace("{{PRICE}}", String.valueOf(price))
+                    .replace("{{ENTNOMMENE_MENGE}}", String.valueOf(removedQuantity))
+                    .replace("{{STOCK}}", String.valueOf(stock))
+                    .replace("{{HERSTELLER}}", String.valueOf(manufacturer))
+                    .replace("{{FIRST_NAME}}", String.valueOf(firstName))
+                    .replace("{{LAST_NAME}}", String.valueOf(lastName))
+                    .replace("{{ACTION}}", String.valueOf(action));
 
             MimeMessage mime = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mime, false, StandardCharsets.UTF_8.name());

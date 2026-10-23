@@ -21,14 +21,6 @@ public class UpdateStorageController {
                          @RequestParam(required = false) String action,
                          Model model) {
         Storage item = storageService.findById(id);
-        if ("plus".equals(action)) {
-            storageService.changeStock(id, 1);
-            return "redirect:/update-storage/" + id;
-        }
-        if ("minus".equals(action)) {
-            storageService.changeStock(id, -1);
-            return "redirect:/update-storage/" + id;
-        }
         model.addAttribute("storage", item);
         model.addAttribute("action", action == null ? "" : action);
         return "update_Storage/updateStorage";
@@ -40,9 +32,15 @@ public class UpdateStorageController {
                        @RequestParam String deliveryTime,
                        @RequestParam(required = false, defaultValue = "") String firstName,
                        @RequestParam(required = false, defaultValue = "") String lastName,
-                       @RequestParam(required = false, defaultValue = "") String useFor) {
-        storageService.updateStock(id, stock, LocalDateTime.parse(deliveryTime),
-                firstName, lastName, useFor);
+                       @RequestParam(required = false, defaultValue = "") String useFor,
+                       @RequestParam(required = false, defaultValue = "") String action) {
+        if ("plus".equals(action) || "minus".equals(action)) {
+            storageService.changeStock(id, "plus".equals(action) ? 1 : -1,
+                    firstName, lastName);
+        } else {
+            storageService.updateStock(id, stock, LocalDateTime.parse(deliveryTime),
+                    firstName, lastName, useFor);
+        }
 
         return "redirect:/dashboard";
     }

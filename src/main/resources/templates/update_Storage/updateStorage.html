@@ -9,6 +9,7 @@
 <div class="storage-container">
     <h1>Lager Aktualisieren</h1>
     <form method="post" class="storage-form" th:action="@{'/update-storage/' + ${storage.id}}">
+        <input type="hidden" name="action" th:value="${action}">
         <div class="form-group readonly">
             <label>ID</label>
             <input type="text" th:value="${storage.id}" readonly>
